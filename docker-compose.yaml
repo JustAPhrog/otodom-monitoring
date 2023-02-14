@@ -1,0 +1,8 @@
+version: '3'
+services:
+  otoscrapper:
+    image: ivanychev/otodom:0.11
+    volumes:
+      - ./data:/opt/data
+      - ./otodom:/opt/otodom
+    command: python -m otodom fetch --bot-token=aaaaa --data-path=/opt/data --send-report False

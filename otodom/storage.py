@@ -43,7 +43,10 @@ def init_storage(base_data_path: pathlib.Path) -> StorageContext:
             url text not null,
             found_ts text,
             title text,
-            picture_url text,
+            area INT,
+            rooms INT,
+            garage INT,
+            build_year INT,
             summary_location text,
             price INTEGER,
             updated_at text,
@@ -99,18 +102,22 @@ def get_total_flats_in_db(conn: sqlite3.Connection, filter_name: str):
 def _insert_flats_unsafe(cur: sqlite3.Cursor, flats: list[Flat], filter_name: str):
     cur.executemany(
         f"""
-        INSERT INTO {FLATS_TABLE} VALUES(?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO {FLATS_TABLE} VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
         (
             (
                 f.url,
                 f.found_ts.isoformat(),
                 f.title,
-                f.picture_url,
+                f.area,
+                f.rooms,
+                f.garage,
+                f.build_year,
                 f.summary_location,
                 f.price,
                 dt_to_naive_utc(f.updated_ts).isoformat(),
                 filter_name,
+                f.flat_id
             )
             for f in flats
         ),

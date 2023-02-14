@@ -9,11 +9,15 @@ class Flat(BaseModel):
     url: str
     found_ts: datetime
     title: str | None
-    picture_url: str | None
+    area: int | None
+    rooms: int | None
+    garage: int | None
+    build_year: int | None
     summary_location: str | None
     price: int | None
     created_dt: datetime | None
     pushed_up_dt: datetime | None
+    flat_id: str | None
 
     @property
     def updated_ts(self):

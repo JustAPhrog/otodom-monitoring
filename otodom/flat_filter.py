@@ -72,7 +72,7 @@ class FlatFilter:
         return self
 
     def compose_url(self):
-        url = furl(f"https://www.otodom.pl/pl/oferty/wynajem/mieszkanie/warszawa")
+        url = furl(f"https://www.otodom.pl/pl/oferty/sprzedaz/mieszkanie/warszawa")
         extras = "[" + ",".join(self.extras) + "]"
         media = "[" + ",".join(self.media) + "]"
 
@@ -85,7 +85,7 @@ class FlatFilter:
         url.args["lang"] = "pl"
         url.args["extras"] = extras
         url.args["media"] = media
-        url.args["searchingCriteria"] = ["wynajem", "mieszkanie", "cala-polska"]
+        url.args["searchingCriteria"] = ["mieszkanie", "cala-polska"]
         if self.min_built_year:
             url.args["buildYearMin"] = self.min_built_year
         if self.page:
@@ -104,18 +104,15 @@ class FlatFilter:
 
 def _specify_common_conditions(f: FlatFilter) -> FlatFilter:
     return (
-        f.with_internet()
-        .with_air_conditioning()
-        .with_max_price(4000)
-        .with_min_area(40)
-        .with_minimum_build_year(2008)
+        f.with_max_price(1000000)
+        .with_minimum_build_year(2000)
     )
 
 
 FILTERS = {
-    # "warsaw": (_specify_common_conditions(FlatFilter("warsaw"))),
-    "wola": (_specify_common_conditions(FlatFilter("wola").in_wola())),
-    "mokotow": (_specify_common_conditions(FlatFilter("mokotow").in_mokotow())),
+    "warsaw": (_specify_common_conditions(FlatFilter("warsaw"))),
+    # "wola": (_specify_common_conditions(FlatFilter("wola").in_wola())),
+    # "mokotow": (_specify_common_conditions(FlatFilter("mokotow").in_mokotow())),
     # "muranow": (_specify_common_conditions(FlatFilter("muranow").in_muranow())),
     # "sluzewiec": (_specify_common_conditions(FlatFilter("sluzewiec").in_sluzewiec())),
     # "sady_zoliborskie": (

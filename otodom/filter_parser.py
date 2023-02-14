@@ -25,8 +25,11 @@ def parse_flats_for_filter(
     filter: FlatFilter,
     now: datetime,
     sleep_for: int = 3,
+    start_page: int = None,
+    limit_pages: int = None
 ) -> list[Flat]:
-    page_idx = 0
+    dumped_flat = False
+    page_idx = start_page if start_page else 0
     flats = []
     while True:
         sleep(sleep_for)
@@ -38,9 +41,22 @@ def parse_flats_for_filter(
         if parser.is_empty():
             break
         parsed_flats = parser.parse()
+        dumped_flat = True
         if not parsed_flats:
             raise RuntimeError(
                 "Looks like there's a next page but the parser failed to parse any flats"
             )
         flats.extend(parser.parse())
+        if limit_pages and limit_pages == page_idx - start_page:
+            break
     return list(unique(flats, attrgetter("url")))
+
+def parse_flat_for_filter(
+    filter: FlatFilter,
+    flat_url: str,
+    now: datetime,
+    sleep_for: int = 3,
+) -> Flat:
+    sleep(sleep_for)
+
+    logger.debug("Querying {}", flat_url)

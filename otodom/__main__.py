@@ -63,6 +63,17 @@ def fetch(data_path: str, bot_token: str, send_report: bool, mode: str):
                 mode=mode,
             )
 
+@cli.command()
+@click.option(
+    "--data-path",
+    default=".",
+    help="The path to use to store SQLite DB and other data.",
+)
+def update_db(data_path: str):
+    data_path = pathlib.Path(data_path).absolute()
+    storage_context = init_storage(data_path)
+    
+
 
 @cli.command()
 def print_flats():

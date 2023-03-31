@@ -1,0 +1,13 @@
+{
+    "name": "python",
+    "build": {
+        "dockerfile": "Dockerfile"
+    }
+    // "image": "mcr.microsoft.com/devcontainers/python:3.11",
+    // "onCreateCommand": {
+    //     "poetry": "curl -sSL https://install.python-poetry.org | python3 -",
+    //     "rust": "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y",
+    //     "pip": "pip install --upgrade pip"
+    // },
+    // "postCreateCommand": "poetry install"
+}

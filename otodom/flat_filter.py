@@ -13,6 +13,7 @@ class FlatFilter:
         self.media = set()
         self.page = None
         self.min_built_year = None
+        self.max_built_year = None
         self.price_max = None
         self.price_min = None
         self.area_max = None
@@ -49,6 +50,10 @@ class FlatFilter:
 
     def with_minimum_build_year(self, year: int) -> Self:
         self.min_built_year = year
+        return self
+
+    def with_maximum_build_year(self, year: int) -> Self:
+        self.max_built_year = year
         return self
 
     def in_wola(self):
@@ -88,6 +93,8 @@ class FlatFilter:
         url.args["searchingCriteria"] = ["mieszkanie", "cala-polska"]
         if self.min_built_year:
             url.args["buildYearMin"] = self.min_built_year
+        if self.max_built_year:
+            url.args["buildYearMax"] = self.max_built_year
         if self.page:
             url.args["page"] = self.page
         if self.price_max:
@@ -104,8 +111,7 @@ class FlatFilter:
 
 def _specify_common_conditions(f: FlatFilter) -> FlatFilter:
     return (
-        f.with_max_price(1000000)
-        .with_minimum_build_year(2000)
+        f.with_min_price(1000000)
     )
 
 

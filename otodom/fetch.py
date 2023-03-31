@@ -30,7 +30,8 @@ def fetch_and_persist_flats(
 ):
     filter_name = flat_filter.name
     limit_pages=1
-    start_page=7
+    start_page=0
+    last_page=5
     flats = parse_flats_for_filter(flat_filter, now=ts, start_page=start_page, limit_pages=limit_pages)
     result_flats = NewAndUpdateFlats([], [])
     while len(flats) != 0:
@@ -58,6 +59,8 @@ def fetch_and_persist_flats(
         )
         result_flats.new_flats.append(new_and_updated_flats.new_flats)
         result_flats.updated_flats.append(new_and_updated_flats.updated_flats)
+        if last_page <= start_page:
+            break
         start_page += 1
         flats = parse_flats_for_filter(flat_filter, now=ts, start_page=start_page, limit_pages=limit_pages)
     

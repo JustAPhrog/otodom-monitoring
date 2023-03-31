@@ -51,6 +51,7 @@ def init_storage(base_data_path: pathlib.Path) -> StorageContext:
             price INTEGER,
             updated_at text,
             filter_name text not null,
+            flat_id text not null,
             PRIMARY KEY (url, filter_name)
         )
         """
